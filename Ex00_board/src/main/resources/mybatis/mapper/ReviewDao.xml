@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.study.springboot.dao.IReviewDao">
+
+	<select id="reviewDao" resultType="com.study.springboot.dto.ReviewDto">
+		select num, id, writer, coment, dd, idx
+		from board_review
+		where num = #{param1}
+	</select>
+	
+	<insert id="reviewWriteDao">
+		insert into board_review (num, id, writer, coment, dd)
+			values (#{param1}, #{param2}, #{param3}, #{param4}, #{param5})
+	</insert>
+	
+	<delete id="reviewdeleteDao">
+		delete from board_review where idx = #{param1}
+	</delete>
+	
+	<delete id="deleteallDao">
+		delete from board_review
+		where num= #{param1}
+	</delete>
+	
+</mapper>

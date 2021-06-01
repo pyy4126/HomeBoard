@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.study.springboot.dao.IFileDao">
+
+	<insert id="addfileDao">
+		insert into board_file (num, id, name, simple_name)
+			values (#{param1}, #{param2}, #{param3}, #{param4})
+	</insert>
+	
+	<select id="filelistDao" resultType="com.study.springboot.dto.FileDto">
+		select name, simple_name, idx, num
+		from board_file
+		where num=#{param1} and id=#{param2}
+	</select>
+	
+	<select id="deletenameDao" resultType="com.study.springboot.dto.FileDto">
+		select name
+		from board_file
+		where num= #{param1}
+	</select>
+	
+	<select id="fileviewDao" resultType="com.study.springboot.dto.FileDto">
+		select name
+		from board_file
+		where idx= #{param1}
+	</select>
+	
+	<delete id="deletefileDao">
+		delete from board_file
+		where idx = #{param1}
+	</delete>
+	
+	<delete id="deleteallDao">
+		delete from board_file
+		where num = #{param1}
+	</delete>
+	
+	<select id="countfileDao" resultType="int">
+		select count(*)
+		from board_file
+		where num = #{param1}
+	</select>
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.study.springboot.dao.ILikeDao">
+
+	<select id="lchkDao" resultType="com.study.springboot.dto.LikeDto">
+		select id, num, chk
+		from board_like
+		where id=#{param1} and num=#{param2}
+	</select>
+	
+	<select id="llistDao" resultType="String">
+		select name
+		from board_like
+		where num=#{param1} and chk='like'
+	</select>
+	
+	<select id="lcntDao" resultType="com.study.springboot.dto.LikeDto">
+		select id, num, chk
+		from board_like
+		where num=#{param1} and chk='like'
+	</select>
+	
+	<insert id="lcreateDao">
+		insert into board_like (id, num, name)
+			values (#{param1}, #{param2}, #{param3})
+	</insert>
+	
+	<update id="ldeleteDao">
+		update board_like
+		set chk = 'unlike'
+		where id = #{param1} and num=#{param2}
+	</update>
+	
+	<update id="lwriteDao">
+		update board_like
+		set chk = if(chk = 'like', 'unlike', 'like')
+		where id = #{param1} and num=#{param2}
+	</update>
+	
+	<delete id="deleteallDao">
+		delete from board_like
+		where num= #{param1};
+	</delete>
+	
+</mapper>

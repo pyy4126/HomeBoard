@@ -1,0 +1,43 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.5'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+group = 'com.study'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4'
+	compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.0'
+	implementation 'javax.servlet:jstl'
+	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	
+	// devtool : 빌드를 재시작 하며 변경사항을 확인할 필요가 없다
+	// 개발환경에서 캐시는 오히려 방해하가 되므로 application.properties에 캐시를 비활성화하는 설정을
+	// 하지 않아도 괜찮도록 자동으로 개발 환경 설정을 적용한다.
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	
+}
+
+test {
+	useJUnitPlatform()
+}

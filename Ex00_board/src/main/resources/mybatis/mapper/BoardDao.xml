@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.study.springboot.dao.IBoardDao">
+
+	<select id="listDao" resultType="com.study.springboot.dto.BoardDto">
+		select num, writer, title, id, bimil, dd, view, review_cnt, fflag
+		from board
+		where #{param1} = 'admin' or id=#{param1} or bimil is null
+		order by dd desc, num desc
+		limit #{param2} , 15
+	</select>
+	
+	<select id="numDao" resultType="String">
+		select LAST_INSERT_ID();
+	</select>
+	
+	<select id="totalDao" resultType="int">
+		select count(*)
+		from board
+		where #{param1} = 'admin' or id=#{param1} or bimil is null
+	</select>
+	
+	<select id="viewDao" resultType="com.study.springboot.dto.BoardDto">
+		select writer, title, content, id, dd, bimil, num, view
+		from board as a
+		where num = #{param1}
+	</select>
+	
+	<update id="plusviewDao">
+		update board
+		set view = view+1
+		where num = #{param1}
+	</update>
+	
+	<select id = "stotalDao" resultType="int">
+		select count(*)
+		from board
+		where ${param1} like concat('%', #{param2}, '%') and
+		(#{param2} = 'admin' or id=#{param2} or bimil is null)
+	</select>
+	
+	<select id="searchNameDao" resultType="com.study.springboot.dto.BoardDto">
+		select num, writer, title, id, bimil, dd, view, fflag, review_cnt
+		from board
+		where ${param1} like CONCAT('%',#{param2},'%') and
+		(#{param3} = 'admin' or id=#{param3} or bimil is null)
+		order by dd desc, num desc
+	</select>
+	
+	<update id="rewriteDao">
+		update board
+		set title = #{param1}, content = #{param2}, bimil = #{param3}, dd = #{param4}
+		where num = #{param5}
+	</update>
+	
+	<update id="plusreviewDao">
+		update board
+		set review_cnt = review_cnt+1
+		where num = #{param1}
+	</update>
+	
+	<update id="minusreviewDao">
+		update board
+		set review_cnt = review_cnt-1
+		where num = #{param1}
+	</update>
+	
+	<insert id="writeDao">
+		insert into board (id, writer, title, content, bimil, dd, fflag)
+			values (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7})
+	</insert>
+	
+	<delete id="deleteDao">
+		delete from board where num = #{param1}
+	</delete>
+	
+	<update id="updatefflagDao">
+		update board
+		set fflag = "exist"
+		where num = #{param1}
+	</update>
+	
+	<update id="emptyfileDao">
+		update board
+		set fflag = "empty"
+		where num = #{param1}
+	</update>
+	
+</mapper>
